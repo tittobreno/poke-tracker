@@ -6,7 +6,7 @@ import { ref, reactive } from 'vue';
 
 const urlImgPokemon = ref('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/')
 const showSelectedPokemon = ref(false);
-const pokemonSelected = reactive(ref())
+const pokemonSelected = ref()
 const showPokemon = ref(false);
 const showAlert = ref(false);
 const pokemons = ref([]);
