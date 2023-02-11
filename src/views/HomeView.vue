@@ -3,8 +3,9 @@ import SelectedPokemon from '@/components/SelectedPokemon.vue'
 import CardPokemon from '@/components/CardPokemon.vue'
 import { ref } from 'vue';
 
-const showSelectedPokemon = ref(false)
-const showPokemon = ref(false)
+const showSelectedPokemon = ref(false);
+const showPokemon = ref(false);
+const showAlert = ref(false);
 const pokemons = ref([{
   name: 'Pikachu',
   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN7uTVxPtFWAUb81G5eEGGungmTWY6TCX8xg&usqp=CAU'
@@ -36,21 +37,25 @@ const currentPokemon = ref([])
 const currentInputName = ref('')
 
 const onSubmit = () => {
-  currentPokemon.value = []
   if (currentInputName.value.trim() === "") {
     alert("Ops, Digite um nome de pokémon")
     return
   }
+
+  currentPokemon.value = [];
+
   const pokemon = pokemons.value.filter(pokemon => pokemon.name === currentInputName.value);
   if (pokemon.length > 0) {
     showPokemon.value = true
-    showSelectedPokemon.value = false;
+    showAlert.value = false;
+
     currentPokemon.value.push(pokemon)
   } else {
     showPokemon.value = false
-    alert("Ops, digite um nome válido por favor!")
-    // TROCAR POR COMPONENTE
+    showAlert.value = true;
   }
+  showSelectedPokemon.value = false;
+
   currentInputName.value = '';
   console.log(currentPokemon.value);
 }
@@ -68,6 +73,10 @@ const handleModal = () => {
         type="text" v-model="currentInputName" placeholder='Digite o nome aqui..'>
       <button class="ml-3 py-3 px-5 rounded-xl bg-slate-200 font-bold text-cyan-900" type="submit">Buscar</button>
     </form>
+
+    <span v-if="showAlert" class='p-5 bg-slate-200 rounded-xl font-bold text-lg text-cyan-900'>Nenhum Pokémon
+      encontrado!</span>
+
     <section v-if="showPokemon" class="flex gap-3 flex-wrap">
       <CardPokemon @click="handleModal" v-for="pokemon in currentPokemon[0]" :key="pokemon.name" :name="pokemon.name"
         :avatar="pokemon.avatar" />

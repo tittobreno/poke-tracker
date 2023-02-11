@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <main class="w-2/4 h-2/3 p-5 flex gap-3 rounded-lg border bg-lime-500 border-slate-500">
+    <main class="w-2/4 h-2/3 p-5 flex gap-3 rounded-lg border bg-slate-200 border-slate-500">
         <section class="w-64 h-full rounded-lg flex flex-col justify-center items-center gap-1">
 
             <img class="w-52 rounded-lg mb-4"
