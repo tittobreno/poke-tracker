@@ -2,10 +2,11 @@
 import api from '../services/api';
 import SelectedPokemon from '@/components/SelectedPokemon.vue';
 import CardPokemon from '@/components/CardPokemon.vue';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
 const urlImgPokemon = ref('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/')
 const showSelectedPokemon = ref(false);
+const pokemonSelected = reactive(ref())
 const showPokemon = ref(false);
 const showAlert = ref(false);
 const pokemons = ref([]);
@@ -44,7 +45,14 @@ const onSubmit = async () => {
 
 
 
-const handleModal = () => {
+const handlePokemonSelected = async (pokemon) => {
+  try {
+    const { data } = await api.get(pokemon.url);
+    pokemonSelected.value = data;
+  } catch (error) {
+    console.log(error);
+  }
+
   showPokemon.value = false;
   showSelectedPokemon.value = true
 }
@@ -62,10 +70,13 @@ const handleModal = () => {
       encontrado!</span>
 
     <section v-if="showPokemon" class="flex gap-3 flex-wrap">
-      <CardPokemon @click="handleModal" v-for="pokemon in currentPokemon[0]" :key="pokemon.name" :name="pokemon.name"
-        :urlImgPokemon="urlImgPokemon + pokemon.url.split('/')[6] + '.svg'" />
+      <CardPokemon @click="handlePokemonSelected(pokemon)" v-for="pokemon in currentPokemon[0]" :key="pokemon.name"
+        :name="pokemon.name" :urlImgPokemon="urlImgPokemon + pokemon.url.split('/')[6] + '.svg'" />
     </section>
-    <SelectedPokemon v-if="showSelectedPokemon" />
+    <SelectedPokemon v-if="showSelectedPokemon" :name="pokemonSelected?.name" :hp="pokemonSelected?.stats[0].base_stat"
+      :attack="pokemonSelected?.stats[1].base_stat" :defense="pokemonSelected?.stats[2].base_stat"
+      :specialAttack="pokemonSelected?.stats[3].base_stat" :specialDefense="pokemonSelected?.stats[4].base_stat"
+      :speed="pokemonSelected?.stats[5].base_stat" :img="pokemonSelected?.sprites.other.dream_world.front_default" />
 
   </main>
 </template>
