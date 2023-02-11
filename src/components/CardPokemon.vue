@@ -3,16 +3,16 @@ import { onMounted, ref } from 'vue';
 import api from '../services/api';
 
 const pokemonProps = defineProps(['name', 'urlImgPokemon']);
-const pokemonData = ref({})
+const pokemonData = ref({});
+
 onMounted(async () => {
     const { data } = await api.get(`/pokemon/${pokemonProps.name}`);
     pokemonData.value = data;
-})
+});
 
 const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
+};
 </script>
 
 <template>
