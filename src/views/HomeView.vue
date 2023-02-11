@@ -13,7 +13,6 @@ const showPokemon = ref(false);
 const showAlert = ref(false);
 const pokemons = ref([]);
 const currentPokemon = ref([]);
-let idPoke = ref();
 const currentInputName = ref("");
 const onSubmit = async () => {
   if (currentInputName.value.trim() === "") {
@@ -51,7 +50,6 @@ const handlePokemonSelected = async (pokemon) => {
     const { data } = await api.get(pokemon.url);
     pokemonSelected.value = data;
 
-    idPoke.value = pokemon.url.split("/")[6];
   } catch (error) {
     console.log(error);
   }
@@ -64,49 +62,25 @@ const handlePokemonSelected = async (pokemon) => {
 <template>
   <main class="flex flex-col items-center min-w-full min-h-full p-10">
     <form @submit.prevent="onSubmit" class="form">
-      <input
-        class="input mt-10 mb-10 py-3 px-5 bg-slate-200 rounded-xl font-bold text-cyan-900 placeholder:font-bold"
-        type="text"
-        v-model="currentInputName"
-        placeholder="Digite o nome aqui.."
-      />
-      <button
-        class="ml-3 py-3 px-5 rounded-xl bg-slate-200 font-bold text-cyan-900"
-        type="submit"
-      >
+      <input class="input mt-10 mb-10 py-3 px-5 bg-slate-200 rounded-xl font-bold text-cyan-900 placeholder:font-bold"
+        type="text" v-model="currentInputName" placeholder="Digite o nome aqui.." />
+      <button class="ml-3 py-3 px-5 rounded-xl bg-slate-200 font-bold text-cyan-900" type="submit">
         Buscar
       </button>
     </form>
 
-    <span
-      v-if="showAlert"
-      class="p-5 bg-slate-200 rounded-xl font-bold text-lg text-cyan-900"
-      >Nenhum Pokémon encontrado!</span
-    >
+    <span v-if="showAlert" class="p-5 bg-slate-200 rounded-xl font-bold text-lg text-cyan-900">Nenhum Pokémon
+      encontrado!</span>
 
     <section v-if="showPokemon" class="flex gap-3 flex-wrap">
-      <CardPokemon
-        @click="handlePokemonSelected(pokemon)"
-        v-for="pokemon in currentPokemon[0]"
-        :key="pokemon.name"
-        :name="pokemon.name"
-        :urlImgPokemon="urlImgPokemon + pokemon.url.split('/')[6] + '.svg'"
-      />
+      <CardPokemon @click="handlePokemonSelected(pokemon)" v-for="pokemon in currentPokemon[0]" :key="pokemon.name"
+        :name="pokemon.name" :urlImgPokemon="urlImgPokemon + pokemon.url.split('/')[6] + '.svg'" />
     </section>
-    <SelectedPokemon
-      v-if="showSelectedPokemon"
-      :name="pokemonSelected?.name"
-      :hp="pokemonSelected?.stats[0].base_stat"
-      :attack="pokemonSelected?.stats[1].base_stat"
-      :defense="pokemonSelected?.stats[2].base_stat"
-      :specialAttack="pokemonSelected?.stats[3].base_stat"
-      :specialDefense="pokemonSelected?.stats[4].base_stat"
-      :speed="pokemonSelected?.stats[5].base_stat"
-      :img="pokemonSelected?.sprites.other.dream_world.front_default"
-      :weight="pokemonSelected?.weight"
-      :height="pokemonSelected?.height"
-      :idPoke="idPoke"
-    />
+    <SelectedPokemon v-if="showSelectedPokemon" :name="pokemonSelected?.name" :hp="pokemonSelected?.stats[0].base_stat"
+      :attack="pokemonSelected?.stats[1].base_stat" :defense="pokemonSelected?.stats[2].base_stat"
+      :specialAttack="pokemonSelected?.stats[3].base_stat" :specialDefense="pokemonSelected?.stats[4].base_stat"
+      :speed="pokemonSelected?.stats[5].base_stat" :img="pokemonSelected?.sprites.other.dream_world.front_default"
+      :weight="pokemonSelected?.weight" :height="pokemonSelected?.height" :idPoke="idPoke" />
   </main>
 </template>
 
