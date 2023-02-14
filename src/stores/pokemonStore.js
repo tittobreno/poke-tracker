@@ -7,9 +7,10 @@ export const usePokemonStore = defineStore("pokemonStore", () => {
   const pokemons = ref([]);
   const currentPokemon = ref([])
 
-  const getIdEvolutionsChains = async (pokemonEvolutionId) => {
+  const getIdEvolutionsChains = (urlEvolutionChain) => {
     try {
-      const { data } = await api.get(`/evolution-chain/${pokemonEvolutionId}`)
+      const idEvolutionChain = urlEvolutionChain.evolution_chain.url.split('/')[6]
+      console.log(idEvolutionChain);
 
     } catch (error) {
       console.log(error);
@@ -31,5 +32,5 @@ export const usePokemonStore = defineStore("pokemonStore", () => {
 
 
 
-  return { pokemons, pokemonSelected, currentPokemon, setPokemonSelected, setListPokemons, setCurrentPokemon };
+  return { pokemons, pokemonSelected, currentPokemon, getIdEvolutionsChains, setPokemonSelected, setListPokemons, setCurrentPokemon };
 });

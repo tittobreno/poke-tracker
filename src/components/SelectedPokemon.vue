@@ -1,6 +1,10 @@
 <script setup>
+import { onMounted } from 'vue';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
+import api from '../services/api';
+import { usePokemonStore } from '../stores/pokemonStore';
 
+const pokemonStore = usePokemonStore();
 const selectedProps = defineProps([
   "name",
   "hp",
@@ -14,6 +18,10 @@ const selectedProps = defineProps([
   "weight",
 ]);
 
+onMounted(async () => {
+  const { data } = await api.get(`pokemon-species/${selectedProps.name}`)
+  pokemonStore.getIdEvolutionsChains(data)
+});
 </script>
 
 <template>
