@@ -4,7 +4,6 @@ import SelectedPokemon from '@/components/SelectedPokemon.vue';
 import CardPokemon from '@/components/CardPokemon.vue';
 import { ref, reactive } from 'vue';
 
-const urlImgPokemon = ref('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/')
 const showSelectedPokemon = ref(false);
 const pokemonSelected = ref()
 const showPokemon = ref(false);
@@ -70,7 +69,7 @@ const handlePokemonSelected = async (pokemon) => {
 
     <section v-if="showPokemon" class="flex gap-3 flex-wrap">
       <CardPokemon @click="handlePokemonSelected(pokemon)" v-for="pokemon in currentPokemon[0]" :key="pokemon.name"
-        :name="pokemon.name" :urlImgPokemon="urlImgPokemon + pokemon.url.split('/')[6] + '.svg'" />
+        :name="pokemon.name" :pokemon="pokemon" />
     </section>
     <SelectedPokemon v-if="showSelectedPokemon" :name="pokemonSelected?.name" :hp="pokemonSelected?.stats[0].base_stat"
       :attack="pokemonSelected?.stats[1].base_stat" :defense="pokemonSelected?.stats[2].base_stat"
