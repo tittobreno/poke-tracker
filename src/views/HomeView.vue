@@ -19,6 +19,7 @@ const onSubmit = async () => {
     alert("Ops, digite um nome no campo!")
     return
   }
+
   currentPokemon.value = [];
 
   try {
@@ -26,7 +27,9 @@ const onSubmit = async () => {
     pokemonStore.setListPokemons(data.results);
 
     const pokemon = pokemons.value.filter(pokemon => pokemon.name.toLowerCase() === currentInputName.value.toLowerCase());
+
     if (pokemon.length > 0) {
+
       showPokemon.value = true
       showAlert.value = false;
       pokemonStore.setCurrentPokemon(pokemon)
@@ -35,8 +38,8 @@ const onSubmit = async () => {
       showPokemon.value = false
       showAlert.value = true;
     }
-    showSelectedPokemon.value = false;
 
+    showSelectedPokemon.value = false;
     currentInputName.value = '';
   } catch (error) {
     console.log(error);

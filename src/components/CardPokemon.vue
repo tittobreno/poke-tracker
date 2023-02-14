@@ -1,17 +1,10 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import api from "../services/api";
+import { ref } from "vue";
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
-const pokemonProps = defineProps(["name", "urlImgPokemon", 'pokemon']);
-const pokemonData = ref({});
 
+const pokemonProps = defineProps(["name", "urlImgPokemon", 'pokemon']);
 const urlImgPokemon = ref('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/')
 let imgPokemonSvg = urlImgPokemon.value + pokemonProps.pokemon.url.split('/')[6] + '.svg';
-
-onMounted(async () => {
-  const { data } = await api.get(`/pokemon/${pokemonProps.name}`);
-  pokemonData.value = data;
-});
 
 </script>
 
