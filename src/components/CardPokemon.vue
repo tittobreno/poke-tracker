@@ -1,22 +1,18 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import api from "../services/api";
-import { pokemonStore } from '../stores/pokemonStore';
-
-const { capitalizeFirstLetter } = pokemonStore();
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 const pokemonProps = defineProps(["name", "urlImgPokemon", 'pokemon']);
 const pokemonData = ref({});
 
 const urlImgPokemon = ref('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/')
 let imgPokemonSvg = urlImgPokemon.value + pokemonProps.pokemon.url.split('/')[6] + '.svg';
 
-// :urlImgPokemon="urlImgPokemon + pokemon.url.split('/')[6] + '.svg'"
 onMounted(async () => {
   const { data } = await api.get(`/pokemon/${pokemonProps.name}`);
   pokemonData.value = data;
 });
 
-console.log(pokemonProps.pokemon);
 </script>
 
 <template>

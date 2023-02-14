@@ -1,7 +1,6 @@
 <script setup>
-import { pokemonStore } from '../stores/pokemonStore';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
-const { capitalizeFirstLetter } = pokemonStore();
 const selectedProps = defineProps([
   "name",
   "hp",
@@ -13,7 +12,6 @@ const selectedProps = defineProps([
   "img",
   "height",
   "weight",
-  "idPoke",
 ]);
 
 </script>

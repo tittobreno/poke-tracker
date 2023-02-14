@@ -1,17 +1,19 @@
 <script setup>
-import api from '../services/api';
-import SelectedPokemon from '@/components/SelectedPokemon.vue';
 import CardPokemon from '@/components/CardPokemon.vue';
-import { ref, reactive } from 'vue';
+import SelectedPokemon from '@/components/SelectedPokemon.vue';
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
+import api from '../services/api';
+import { usePokemonStore } from '../stores/pokemonStore';
+
+const pokemonStore = usePokemonStore()
+const { pokemonSelected, pokemons, currentPokemon } = storeToRefs(pokemonStore);
 
 const showSelectedPokemon = ref(false);
-const pokemonSelected = ref()
 const showPokemon = ref(false);
 const showAlert = ref(false);
-const pokemons = ref([]);
-const currentPokemon = ref([])
-let idPoke = ref();
 const currentInputName = ref('')
+
 const onSubmit = async () => {
   if (currentInputName.value.trim() === "") {
     alert("Ops, digite um nome no campo!")
@@ -21,13 +23,13 @@ const onSubmit = async () => {
 
   try {
     const { data } = await api.get('/pokemon?limit=100000&offset=0');
-    pokemons.value = data.results;
+    pokemonStore.setListPokemons(data.results);
 
     const pokemon = pokemons.value.filter(pokemon => pokemon.name.toLowerCase() === currentInputName.value.toLowerCase());
     if (pokemon.length > 0) {
       showPokemon.value = true
       showAlert.value = false;
-      currentPokemon.value.push(pokemon)
+      pokemonStore.setCurrentPokemon(pokemon)
 
     } else {
       showPokemon.value = false
@@ -44,9 +46,8 @@ const onSubmit = async () => {
 const handlePokemonSelected = async (pokemon) => {
   try {
     const { data } = await api.get(pokemon.url);
-    pokemonSelected.value = data;
+    pokemonStore.setPokemonSelected(data)
 
-    idPoke.value = pokemon.url.split('/')[6];
   } catch (error) {
     console.log(error);
   }
@@ -75,7 +76,7 @@ const handlePokemonSelected = async (pokemon) => {
       :attack="pokemonSelected?.stats[1].base_stat" :defense="pokemonSelected?.stats[2].base_stat"
       :specialAttack="pokemonSelected?.stats[3].base_stat" :specialDefense="pokemonSelected?.stats[4].base_stat"
       :speed="pokemonSelected?.stats[5].base_stat" :img="pokemonSelected?.sprites.other.dream_world.front_default"
-      :weight="pokemonSelected?.weight" :height="pokemonSelected?.height" :idPoke="idPoke" />
+      :weight="pokemonSelected?.weight" :height="pokemonSelected?.height" />
 
 
   </main>

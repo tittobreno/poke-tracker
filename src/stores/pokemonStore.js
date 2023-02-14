@@ -1,11 +1,11 @@
-import { computed, reactive, ref } from "vue";
 import { defineStore } from "pinia";
+import { ref } from "vue";
 import api from '../services/api';
-export const pokemonStore = defineStore("pokemon", () => {
 
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+export const usePokemonStore = defineStore("pokemonStore", () => {
+  const pokemonSelected = ref()
+  const pokemons = ref([]);
+  const currentPokemon = ref([])
 
   const getIdEvolutionsChains = async (pokemonEvolutionId) => {
     try {
@@ -16,5 +16,20 @@ export const pokemonStore = defineStore("pokemon", () => {
     }
   };
 
-  return { capitalizeFirstLetter };
+
+  const setListPokemons = (pokemonsList) => {
+    pokemons.value = pokemonsList;
+  };
+
+  const setPokemonSelected = (pokemon) => {
+    pokemonSelected.value = pokemon;
+  };
+
+  const setCurrentPokemon = (currentPokemonData) => {
+    currentPokemon.value.push(currentPokemonData)
+  };
+
+
+
+  return { pokemons, pokemonSelected, currentPokemon, setPokemonSelected, setListPokemons, setCurrentPokemon };
 });
