@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from "vue";
-import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
 
-const pokemonProps = defineProps(["name", "urlImgPokemon", 'pokemon']);
-const urlImgPokemon = ref('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/')
-let imgPokemonSvg = urlImgPokemon.value + pokemonProps.pokemon.url.split('/')[6] + '.svg';
-
+const pokemonProps = defineProps(["name", "urlImgPokemon", "pokemon"]);
+const urlImgPokemon = ref(
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/"
+);
+let imgPokemonSvg =
+  urlImgPokemon.value + pokemonProps.pokemon.url.split("/")[6] + ".svg";
 </script>
 
 <template>

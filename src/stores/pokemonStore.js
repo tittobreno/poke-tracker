@@ -1,22 +1,20 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import api from '../services/api';
 
 export const usePokemonStore = defineStore("pokemonStore", () => {
-  const pokemonSelected = ref()
+  const pokemonSelected = ref();
   const pokemons = ref([]);
-  const currentPokemon = ref([])
+  const currentPokemon = ref([]);
 
   const getIdEvolutionsChains = (urlEvolutionChain) => {
     try {
-      const idEvolutionChain = urlEvolutionChain.evolution_chain.url.split('/')[6]
+      const idEvolutionChain =
+        urlEvolutionChain.evolution_chain.url.split("/")[6];
       console.log(idEvolutionChain);
-
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const setListPokemons = (pokemonsList) => {
     pokemons.value = pokemonsList;
@@ -27,10 +25,16 @@ export const usePokemonStore = defineStore("pokemonStore", () => {
   };
 
   const setCurrentPokemon = (currentPokemonData) => {
-    currentPokemon.value.push(currentPokemonData)
+    currentPokemon.value.push(currentPokemonData);
   };
 
-
-
-  return { pokemons, pokemonSelected, currentPokemon, getIdEvolutionsChains, setPokemonSelected, setListPokemons, setCurrentPokemon };
+  return {
+    pokemons,
+    pokemonSelected,
+    currentPokemon,
+    getIdEvolutionsChains,
+    setPokemonSelected,
+    setListPokemons,
+    setCurrentPokemon,
+  };
 });
