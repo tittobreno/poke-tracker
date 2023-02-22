@@ -1,6 +1,7 @@
 <script setup>
 import CardPokemon from "@/components/CardPokemon.vue";
 import SelectedPokemon from "@/components/SelectedPokemon.vue";
+import Header from '@/components/Header.vue';
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import api from "../services/api";
@@ -61,16 +62,19 @@ const handlePokemonSelected = async (pokemon) => {
 </script>
 
 <template>
-  <main class="flex flex-col items-center min-w-full min-h-full p-10">
-    <form @submit.prevent="onSubmit" class="form">
-      <input class="input mt-10 mb-10 py-3 px-5 bg-slate-200 rounded-xl font-bold text-cyan-900 placeholder:font-bold"
-        type="text" v-model="currentInputName" placeholder="Digite o nome aqui.." />
-      <button class="ml-3 py-3 px-5 rounded-xl bg-slate-200 font-bold text-cyan-900" type="submit">
+  <main class="flex flex-col items-center min-w-full min-h-full px-10">
+    <Header />
+
+    <form @submit.prevent="onSubmit" class="form w-96 m-10 flex items-center justify-between">
+      <input class="input py-3 px-5 bg-slate-200 rounded-xl font-bold text-cyan-900 placeholder:font-bold" type="text"
+        v-model="currentInputName" placeholder="Digite o nome aqui.." />
+      <button class="py-3 px-5 rounded-xl bg-slate-200 font-bold text-cyan-900" type="submit">
         Buscar
       </button>
     </form>
 
-    <span v-if="showAlert" class="p-5 bg-slate-200 rounded-xl font-bold text-lg text-cyan-900">Nenhum Pokémon
+    <span v-if="showAlert" class="w-96 p-5 bg-slate-200 rounded-xl font-bold text-lg text-cyan-900 text-center">Nenhum
+      Pokémon
       encontrado!</span>
 
     <section v-if="showPokemon" class="flex gap-3 flex-wrap">
