@@ -1,8 +1,40 @@
-import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const pokemonStore = defineStore("pokemon", () => {
-  let pokeId = reactive(ref());
+export const usePokemonStore = defineStore("pokemonStore", () => {
+  const pokemonSelected = ref();
+  const pokemons = ref([]);
+  const currentPokemon = ref([]);
 
-  return { pokeId };
+  const getIdEvolutionsChains = (urlEvolutionChain) => {
+    try {
+      const idEvolutionChain =
+        urlEvolutionChain.evolution_chain.url.split("/")[6];
+      console.log(idEvolutionChain);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setListPokemons = (pokemonsList) => {
+    pokemons.value = pokemonsList;
+  };
+
+  const setPokemonSelected = (pokemon) => {
+    pokemonSelected.value = pokemon;
+  };
+
+  const setCurrentPokemon = (currentPokemonData) => {
+    currentPokemon.value.push(currentPokemonData);
+  };
+
+  return {
+    pokemons,
+    pokemonSelected,
+    currentPokemon,
+    getIdEvolutionsChains,
+    setPokemonSelected,
+    setListPokemons,
+    setCurrentPokemon,
+  };
 });

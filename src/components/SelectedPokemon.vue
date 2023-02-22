@@ -1,4 +1,10 @@
 <script setup>
+import { onMounted } from "vue";
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+import api from "../services/api";
+import { usePokemonStore } from "../stores/pokemonStore";
+
+const pokemonStore = usePokemonStore();
 const selectedProps = defineProps([
   "name",
   "hp",
@@ -10,8 +16,12 @@ const selectedProps = defineProps([
   "img",
   "height",
   "weight",
-  "idPoke",
 ]);
+
+onMounted(async () => {
+  const { data } = await api.get(`pokemon-species/${selectedProps.name}`);
+  pokemonStore.getIdEvolutionsChains(data);
+});
 </script>
 
 <template>
@@ -30,7 +40,7 @@ const selectedProps = defineProps([
           />
           <strong
             class="bg-cyan-900 w-full text-white text-center rounded-2xl py-2 px-4 text-2xl"
-            >{{ selectedProps.name }}</strong
+            >{{ capitalizeFirstLetter(selectedProps.name) }}</strong
           >
         </div>
 

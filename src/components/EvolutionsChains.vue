@@ -11,7 +11,7 @@
         <img class="w-52 rounded-lg mb-7 mt-4" src="#" alt="Ícone Pokémon" />
         <strong
           class="bg-cyan-900 w-full text-white text-center rounded-2xl py-2 px-4 text-2xl"
-          >Pikachu</strong
+          >Charmander</strong
         >
       </div>
     </section>
