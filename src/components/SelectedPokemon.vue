@@ -3,7 +3,7 @@ import { onMounted } from "vue";
 import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
 import api from "../services/api";
 import { usePokemonStore } from "../stores/pokemonStore";
-import { formatHeight } from '../utils/formatString';
+import { formatHeightAndWeight } from '../utils/formatHeightAndWeight';
 const pokemonStore = usePokemonStore();
 const selectedProps = defineProps([
   "name",
@@ -17,7 +17,6 @@ const selectedProps = defineProps([
   "height",
   "weight",
 ]);
-console.log(selectedProps.height)
 
 
 onMounted(async () => {
@@ -37,14 +36,14 @@ onMounted(async () => {
         </div>
 
         <div class="flex items-center w-full gap-5 mt-2">
-          <div class="bg-lime-500 text-white w-1/2 flex justify-between items-center rounded-2xl py-2 px-4 text-2xl">
+          <div class="bg-lime-500 text-white w-1/2 flex justify-between items-center rounded-xl py-2 px-4 text-xl">
             <strong>HEIGHT</strong>
-            <strong>{{ formatHeight(selectedProps.height) + ' m' }}</strong>
+            <strong>{{ formatHeightAndWeight(selectedProps.height) + ' m' }}</strong>
           </div>
 
-          <div class="bg-orange-500 text-white w-1/2 flex justify-between items-center rounded-2xl py-2 px-4 text-2xl">
+          <div class="bg-orange-500 text-white w-1/2 flex justify-between items-center rounded-xl py-2 px-4 text-xl">
             <strong>WEIGHT</strong>
-            <strong>{{ selectedProps.weight }}</strong>
+            <strong>{{ formatHeightAndWeight(selectedProps.weight) + ' kg' }}</strong>
           </div>
         </div>
       </section>
