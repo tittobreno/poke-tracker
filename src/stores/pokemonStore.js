@@ -10,7 +10,6 @@ export const usePokemonStore = defineStore("pokemonStore", () => {
     try {
       const idEvolutionChain =
         urlEvolutionChain.evolution_chain.url.split("/")[6];
-      console.log(idEvolutionChain);
     } catch (error) {
       console.log(error);
     }

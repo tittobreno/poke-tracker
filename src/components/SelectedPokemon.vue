@@ -3,7 +3,7 @@ import { onMounted } from "vue";
 import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
 import api from "../services/api";
 import { usePokemonStore } from "../stores/pokemonStore";
-
+import { formatHeight } from '../utils/formatString';
 const pokemonStore = usePokemonStore();
 const selectedProps = defineProps([
   "name",
@@ -17,6 +17,8 @@ const selectedProps = defineProps([
   "height",
   "weight",
 ]);
+console.log(selectedProps.height)
+
 
 onMounted(async () => {
   const { data } = await api.get(`pokemon-species/${selectedProps.name}`);
@@ -37,7 +39,7 @@ onMounted(async () => {
         <div class="flex items-center w-full gap-5 mt-2">
           <div class="bg-lime-500 text-white w-1/2 flex justify-between items-center rounded-2xl py-2 px-4 text-2xl">
             <strong>HEIGHT</strong>
-            <strong>{{ selectedProps.height }}</strong>
+            <strong>{{ formatHeight(selectedProps.height) + ' m' }}</strong>
           </div>
 
           <div class="bg-orange-500 text-white w-1/2 flex justify-between items-center rounded-2xl py-2 px-4 text-2xl">
