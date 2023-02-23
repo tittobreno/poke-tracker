@@ -10,6 +10,7 @@ import { usePokemonStore } from "../stores/pokemonStore";
 const pokemonStore = usePokemonStore();
 const { pokemonSelected, pokemons, currentPokemon } = storeToRefs(pokemonStore);
 
+const isLoading = ref(false);
 const showSelectedPokemon = ref(false);
 const showPokemon = ref(false);
 const showAlert = ref(false);
@@ -21,9 +22,10 @@ const onSubmit = async () => {
     return;
   }
 
-  currentPokemon.value = [];
-
   try {
+    isLoading.value = true;
+    currentPokemon.value = [];
+
     const { data } = await api.get("/pokemon?limit=100000&offset=0");
     pokemonStore.setListPokemons(data.results);
 
@@ -41,23 +43,29 @@ const onSubmit = async () => {
       showAlert.value = true;
     }
 
-    showSelectedPokemon.value = false;
-    currentInputName.value = "";
   } catch (error) {
     console.log(error);
+  } finally {
+    showSelectedPokemon.value = false;
+    currentInputName.value = "";
+    isLoading.value = false;
   }
 };
 
 const handlePokemonSelected = async (pokemon) => {
+  isLoading.value = true;
+  showPokemon.value = false;
+
   try {
     const { data } = await api.get(pokemon.url);
     pokemonStore.setPokemonSelected(data);
   } catch (error) {
     console.log(error);
+  } finally {
+    isLoading.value = false;
+    showSelectedPokemon.value = true;
   }
 
-  showPokemon.value = false;
-  showSelectedPokemon.value = true;
 };
 </script>
 
@@ -72,6 +80,8 @@ const handlePokemonSelected = async (pokemon) => {
         Buscar
       </button>
     </form>
+
+    <img v-if="isLoading" class="w-28" src="../assets/loader.svg" alt="Loader">
 
     <span v-if="showAlert" class="w-96 p-5 bg-slate-200 rounded-xl font-bold text-lg text-cyan-900 text-center">Nenhum
       Pokémon
@@ -92,13 +102,9 @@ const handlePokemonSelected = async (pokemon) => {
 <style scoped>
 @media (max-width: 450px) {
   .form {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-  }
-
-  .input {
-    width: 100%;
+    justify-content: center;
+    gap: 1rem;
   }
 }
 </style>
