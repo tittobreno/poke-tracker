@@ -26,10 +26,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="container-selected w-screen h-full p-5 flex flex-col gap-3 items-center rounded-lg">
+  <main class="container-selected w-full h-full p-5 flex flex-col gap-3 items-center rounded-lg">
     <section
       class="container-selected__main w-3/4 h-2/3 p-5 flex gap-3 justify-between rounded-lg border bg-slate-200 border-slate-500">
-      <section class="container-attributes w-1/2 min-h-full rounded-lg flex flex-col justify-between items-center gap-1">
+      <section class="container-attributes w-1/2 h-full rounded-lg flex flex-col justify-between items-center gap-1">
         <div class="flex flex-col items-center">
           <img class="w-52 h-40 rounded-lg mb-7 mt-4" :src="selectedProps.img" alt="Ícone Pokémon" />
           <strong class="bg-cyan-900 w-full text-white text-center rounded-2xl py-2 px-4 text-2xl">{{
