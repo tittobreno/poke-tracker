@@ -91,7 +91,6 @@ const handlePokemonSelected = async (pokemon) => {
     isLoading.value = false;
     showSelectedPokemon.value = true;
   }
-
 };
 
 </script>
